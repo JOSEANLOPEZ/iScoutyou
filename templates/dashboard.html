@@ -1,0 +1,859 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+
+{% block content %}
+
+{% if request.user.is_authenticated %}
+{% comment %}
+<p>Welcome, {{ request.user.get_username }}. Thanks for logging in.</p>
+User: {{ request.user.get_username }} <br>
+Email: {{ usermail }} <br><br>
+<a href="{% url 'accounts' %}">config account</a><br>
+<a href="{% url 'django.contrib.auth.views.logout' %}">logout</a>
+{% endcomment %}
+
+
+{% if perfil == 'none' %}
+<div class="bs-example">
+    <div class="alert alert-warning fade in">
+        <a href="#" class="close" data-dismiss="alert">×</a>
+        You must create your basic data on <a href="{% url 'editprofile' %}"><strong>Basic Information</strong></a> first     
+    </div>
+</div>
+
+
+{% else %}
+
+
+
+
+<div class="row">
+    <div class="col-xs-offset-1 col-xs-10 col-sm-offset-1 col-sm-10 col-md-offset-0 col-md-6 col-lg-6" style="background: grey;">
+
+        <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5" >
+
+            <div class="margen">
+                {% if profile.image_profile %}
+                <img class="img-responsive center-block" src="{{ profile.image_profile.url_190x240 }}" alt="..." class="">
+                {% else %}
+                <img class="img-responsive center-block" src="{% static "images/iscout-photo.jpg" %}" alt="..." class="">
+                {% endif %}
+            </div>
+
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-7 col-lg-7" >
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+          
+                <h3>{{ profile.first_name}} <span> </span>{{profile.last_name}}</h3>
+          
+         
+                <h5>GPA/SAT/ACT: {{profile.gpa}}/{{profile.sat}}/{{profile.act}}</h5>
+                <h5>Weight: {{profile.weight}} lbs</h5>
+                <h5>Height: {{profile.height}}</h5>
+
+               <h5>{{login.email}}</h5>
+           
+                <h5>{{profile.home_phone}}</h5>
+        
+                <h5>
+                {% for acad_profile in acad_profile %}
+                {{ acad_profile.school }}
+                {% endfor %}
+                </h5>
+          
+                <h5>{{profile.state}}</h5>
+
+                <h5>{{profile.sport}}</h5>
+                <h5>NCAA: {{profile.ncaa}}</h5>
+            </div>
+
+
+        </div>
+        <!--***********************************************************-->
+    </div>
+<div class="col-sm-offset-1 col-sm-10 col-md-offset-0 col-md-12">
+
+{% comment "optional note" %}
+    
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+                    60%
+                </div>
+            </div>
+
+
+
+{% endcomment %}
+
+</div>
+        <hr>
+        <div class="row">
+
+            <div class="col-sm-offset-1 col-sm-10 col-md-offset-0 col-md-12">
+               
+                {% for stats_profile in stats_profile %}
+                <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4" >
+        <span class="glyphicon glyphicon-tasks"> </span><span> </span> {{ stats_profile.evaluations.name }}:{{ stats_profile.result }}
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+        <br>
+
+    </div>
+
+
+
+    <!-- HIGHLIGHT/SKILLS VIDEO -->
+
+
+
+    <div class="col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-0 col-md-6 col-lg-6" >
+       {% comment "optional note" %}
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="background: black;" >
+                   <h4 class="letraB">HIGHLIGHT/SKILLS VIDEO</h4>
+                   <div class="margen">
+                       <img class="img-responsive center-block" src="{% static "images/iscoutyou-VIDEO01-profile.jpg" %}" class="img-responsive" alt="Responsive image">
+                   </div>
+               </div>
+               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="background: black;">
+                   <div class="margen">
+                       <img class="img-responsive center-block"  src="{% static "images/iscoutyou-VIDEO01-profile.jpg" %}" class="img-responsive" alt="Responsive image">
+                   </div>
+               </div>
+       {% endcomment %}
+       <div class="col-md-12">
+        {% load embed_video_tags %}
+        
+
+{% if video1 == 'none' %}
+
+<img class="img-responsive center-block" src="{% static "images/videos.jpg" %}" alt="..." class="">
+
+   
+                
+ {% else %}
+                
+     
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="home">
+    <div class="embed-responsive embed-responsive-4by3 videos">
+            {% video video1.video1 'small' %}
+        </div>
+    </div>
+
+    <div role="tabpanel" class="tab-pane" id="profile">
+
+    {% if video2 == 'none' %}
+        <img class="img-responsive center-block" src="{% static "images/videos.jpg" %}" alt="..." class="">
+    {% else %}
+
+    <div class="embed-responsive embed-responsive-4by3 videos">
+            {% video video1.video2 'small' %}
+        </div>
+    {% endif %}
+    </div>
+
+  </div>
+
+ <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist" style=" border-bottom: 0px solid #ddd;">
+    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Video 1</a></li>
+
+    {% if video2 == 'none' %}
+        
+    {% else %}
+    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Video 2</a></li>
+{% endif %}
+  </ul>         
+
+{% endif %}
+
+
+
+    </div>
+    </div>
+
+
+    <!-- end HIGHLIGHT/SKILLS VIDEO -->
+
+
+</div>
+
+
+<!--ATHLETIC HISTORY -->
+
+<div class=" col-xs-offset-0 col-sm-offset-1 col-md-offset-0 col-lg-offset-0 col-xs-12 col-sm-11 col-md-12 col-lg-12 " >
+    <br>
+
+
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading"><h4>ATHLETIC HISTORY</h4></div>
+
+        <table class="table table-hover table-bordered">
+
+            <tbody>
+                <tr>
+                    <th>Year</th>   
+                    <th>Highschool</th> 
+                    <th>Descriptions</th>
+                </tr>
+            </tbody>
+            <tbody> 
+                {% for athlete_history in athlete_history %}
+                <tr>
+                    <!--th scope="row">1</th-->
+                    <td>{{ athlete_history.year }}</td> 
+                    <td>{{ athlete_history.highschool }}</td>
+                    <td>{{ athlete_history.descriptions }}</td> 
+
+
+                </tr> 
+
+                {% endfor %}
+                <tr>
+                    <td colspan="3"><strong>CLUB SEASON HISTORY</strong></td>
+                </tr>
+                 <tr>
+                    <th>Year</th> 
+                    <th>Club</th>
+                    <!--th>Achievement</th-->
+                    <th>Descriptions</th>
+                </tr>
+                {% for club_season_history in club_season_history %}
+                <tr>
+                    <td>{{ club_season_history.year }}</td>
+                    <td>{{ club_season_history.club }}</td> 
+                    <td>{{ club_season_history.descriptions }}</td> 
+                </tr> 
+                {% endfor %}
+            </tbody> 
+
+        </table>
+    </div>
+
+
+
+    <!-- END ATHLETIC HISTORY -->
+
+    <br>
+
+{% comment "optional note" %}
+     <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading"><h4>CLUB SEASON HISTORY</h4></div>
+        <table class="table table-hover table-bordered">
+            <tbody>
+                <tr>
+
+                    <th>Year</th> 
+                    <th>Club</th>
+                    <!--th>Achievement</th-->
+                    <th>Descriptions</th>
+                  
+                </tr>
+            </tbody>
+            <tbody> 
+                {% for club_season_history in club_season_history %}
+                <tr>
+                    <td>{{ club_season_history.year }}</td>
+                    <td>{{ club_season_history.club }}</td> 
+                    <td>{{ club_season_history.descriptions }}</td> 
+                </tr> 
+                {% endfor %}
+            </tbody> 
+        </table>
+</div>
+
+{% endcomment %}
+
+    <!-- STATS INFO -->
+
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading"><h4>ATHLETIC INFORMATION</h4></div>
+
+        <table class="table table-hover table-bordered">
+
+            <tbody>
+                <tr>
+                    <th>Stats</th>
+                    <th>Overall</th> 
+         <!--       <th>Unit</th>       -->
+                </tr>
+            </tbody>
+            <tbody> 
+                {% for stats_profile in stats_profile %}
+                <tr>
+                    <!--th scope="row">1</th-->
+                    <td>{{ stats_profile.evaluations.name }}</td> 
+                    <td>{{ stats_profile.result }}</td>
+     <!--           <td>{{ stats_profile.evaluations.measure_name }}</td>  -->
+                </tr> 
+
+                {% endfor %}
+            </tbody> 
+        </table>
+    </div>
+
+    <br>
+
+
+
+
+
+
+
+
+
+ <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading"><h4>VARSITY TEAM</h4></div>
+        <table class="table table-hover table-bordered">
+            <tbody>
+                <tr>
+
+                    <th> </th> 
+                    <th>Club</th>
+                    <th>Years</th>
+                  
+                </tr>
+            </tbody>
+            <tbody> 
+
+                <tr>
+                    <!--th scope="row">1</th-->
+
+                    <td>{{ profile.varsity_yn }}</td>
+                    <td>{{ profile.varsity_club }}</td> 
+                    <td>{{ profile.varsity_years }}</td> 
+                    <!--td>{{ acad_profile.logros }}</td-->
+                    
+                </tr> 
+
+
+            </tbody> 
+        </table>
+</div>
+<br>
+
+
+
+
+
+<br>
+
+
+
+    
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading"><h4>COACH REFERENCE</h4></div>
+
+        <table class="table table-hover table-bordered">
+
+            <tbody>
+                <tr>
+                    <th>Name</th>
+                    <th>Position</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+
+                </tr>
+            </tbody>
+
+            <tbody>
+                {% for coach_profile in coach_profile %}
+                <tr>
+                    <!--th scope="row">1</th-->
+                    <td>{{ coach_profile.coach_name }}</td> 
+                    <td>{{ coach_profile.position }}</td>
+                    <td>{{ coach_profile.phone }}</td> 
+                    <td>{{ coach_profile.email }}</td>
+                </tr> 
+
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+
+    <!--ACADEMIC INFO -->
+
+    <br>
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading"><h4>ACADEMIC INFO</h4></div>
+        <table class="table table-hover table-bordered">
+
+
+            <tbody>
+                <tr>
+                    <th>GPA</th>
+                    <th>SAT</th>
+                    <th>ACT</th>
+
+                </tr>
+            </tbody>
+
+            <tbody>
+
+                <tr>
+                    <td>{{ profile.gpa}}</td>
+                    <td>{{ profile.sat}}</td> 
+                    <td>{{ profile.act}}</td>
+
+                </tr> 
+
+
+            </table>
+
+
+
+
+
+
+        </div>
+
+
+
+
+        <div class="panel panel-default">
+            <table class="table table-hover table-bordered">
+                <tbody>
+                    <tr>
+
+                        <th>High School</th> 
+                        <th>Graduation Year</th>
+
+
+                    </tr>
+                </tbody>
+                <tbody> 
+                    {% for acad_profile in acad_profile %}
+                    <tr>
+                        <!--th scope="row">1</th-->
+
+                        <td>{{ acad_profile.school }}</td>
+                        <td>{{ acad_profile.year_acad_graduation }}</td> 
+
+
+                    </tr> 
+
+                    {% endfor %}
+                </tbody> 
+            </table>
+
+        </div>
+
+
+
+        <!--END ACADEMIC INFO -->
+
+        <br>
+
+
+
+{% comment "optional note" %}
+            <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading"><h4>ACADEMIC HISTORY</h4></div>
+
+            <table class="table table-hover table-bordered">
+
+                <tbody>
+                    <tr>
+                        <th>Year</th>
+                        <th>Highschool</th> 
+                        <th>Descriptions</th>
+                    </tr>
+                </tbody>
+                <tbody> 
+                    {% for history_profile in history_profile %}
+                    <tr>
+                        <!--th scope="row">1</th-->
+                        <td>{{ history_profile.year_acad_graduation }}</td> 
+                        <td>{{ history_profile.school }}</td>
+                        <td>{{ history_profile.logros }}</td> 
+                    </tr> 
+
+                    {% endfor %}
+                </tbody> 
+            </table>
+        </div>
+{% endcomment %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading"><h4>AWARDS</h4></div>
+        <table class="table table-hover table-bordered">
+            <tbody>
+                <tr>
+
+                    <th>Year</th> 
+                    <th>Awards</th>
+                    <!--th>Achievement</th-->
+                    <th>Descriptions</th>
+        
+                </tr>
+            </tbody>
+            <tbody> 
+                {% for awards in awards %}
+                <tr>
+                    <!--th scope="row">1</th-->
+
+                    <td>{{ awards.year }}</td>
+                    <td>{{ awards.awards }}</td> 
+                    <td>{{ awards.descriptions }}</td> 
+                    <!--td>{{ acad_profile.logros }}</td-->
+                    
+                </tr> 
+
+                {% endfor %}
+            </tbody> 
+        </table>
+
+</div>
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+ <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading"><h4>ACHIVEMENT</h4></div>
+        <table class="table table-hover table-bordered">
+            <tbody>
+                <tr>
+
+                    <th>Year</th> 
+
+                    <!--th>Achievement</th-->
+                    <th>Descriptions</th>
+               
+                </tr>
+            </tbody>
+            <tbody> 
+                {% for archivement in archivement %}
+                <tr>
+                    <!--th scope="row">1</th-->
+
+                    <td>{{ archivement.year }}</td>
+{% comment %}
+                     <td>{{ archivement.archivement }}</td>   
+{% endcomment %}
+ 
+                    
+                    <td>{{ archivement.descriptions }}</td> 
+                    <!--td>{{ acad_profile.logros }}</td-->
+                    
+                </tr> 
+
+                {% endfor %}
+            </tbody> 
+        </table>
+
+</div><br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="panel panel-default">
+            <div class="panel-heading"><h4>PERSONAL STATEMENT</h4></div>
+            <div class="panel-body">
+
+                {{profile.personal_statement|linebreaks}}
+
+
+
+
+            </div>
+        </div>
+
+
+
+        <br>
+
+        <!--CONTACT INFO -->
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading"><h4>CONTACT INFO</h4></div>
+
+            <table class="table table-hover table-bordered">
+
+                <tbody>
+                    <tr>
+                        <th>Student/Athlete</th>
+                        <th>Phone</th>
+                        <th>Mobile</th>
+                        <th>Email</th>
+                    </tr>
+                </tbody>
+
+                <tbody>
+                    <tr>
+                        <td>{{profile.first_name}}</td>
+                        <td>{{profile.home_phone}}</td>
+                        <td>{{profile.cel_phone}}</td>
+                        <td>{{login.email}}</span>
+
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4"><strong>Guardian Information</strong></td>
+                    </tr>
+
+
+
+                    <tr>
+                        <td>{{ profile.guardian1}}: {{ profile.g_first_name}} <span> </span>{{ profile.g_last_name}}</td>
+                        <td></td>
+                        <td>{{profile.g_phone}}</td>
+                        <td>{{profile.g_mail}}</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>{{ profile.guardian2}}: {{ profile.g2_first_name}} <span> </span>{{ profile.g2_last_name}}</td>
+                        <td></td>
+                        <td>{{profile.g2_phone}}</td>
+                        <td>{{profile.g2_mail}}</span></td>
+                    </tr>
+
+
+                </tbody>
+            </table>
+        </div>
+        <br><br>
+
+
+        <!--END CONTACT INFO -->
+
+
+
+
+
+
+    </div>
+
+
+    <!-- end data1-->
+
+    {% endif %}
+
+    {% if perfil == 'none' %}
+
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="background: grey;">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="background: grey;">
+                <div class="margen">
+                    <img src="{% static "images/iscout-PICTURE-profile.jpg" %}" class="img-responsive" alt="Responsive image">
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="background: grey;">
+                <div class="margen">
+                    <h3>Your Profile</h3>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="background: grey;">
+                <h4></h4>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="background: grey;">
+                <h1>?</h1>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="background: grey;">
+                <h4></h4>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="background: grey;">
+                <!--i class="fa fa-envelope"> <span></span></i-->
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="background: grey;">
+                <!--i class="fa fa-phone"> <span></span></i-->
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="background;">
+
+                <div class=" col-xs-12 col-sm-12 col-md-4 col-lg-">
+                    <div class="margen">
+                        <!--i class="fa fa-bar-chart"> <span>Top Fastball: 88</span></i-->  
+                    </div>
+                </div>
+                <div class=" col-xs-12 col-sm-12 col-md-4 col-lg-">
+                    <div class="margen">
+                        <!--i class="fa fa-bar-chart"> <span>Fastball: 85</span></i-->  
+                    </div>
+                </div>
+                <div class=" col-xs-12 col-sm-12 col-md-4 col-lg-">
+                    <div class="margen">
+                        <!--i class="fa fa-bar-chart"> <span>Curve: 70</span></i-->  
+                    </div>
+                </div>
+                <div class=" col-xs-12 col-sm-12 col-md-4 col-lg-">
+                    <div class="margen">
+                        <!--i class="fa fa-bar-chart"> <span>Change Up: 67</span></i-->  
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br><br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    {% endif %}
+    {% endif %}
+
+    {% endblock%}
+
+
+
+
+
+
+
+    {% block scripts %}
+
+
+    <script type="text/javascript">
+
+        var patron = new Array(2,2,4)
+        var patron2 = new Array(1,3,3,3,3)
+
+
+        function mascara(d,sep,pat,nums){
+            if(d.valant != d.value){
+                val = d.value
+                largo = val.length
+                val = val.split(sep)
+                val2 = ''
+                for(r=0;r<val.length;r++){
+                    val2 += val[r]  
+                }
+                if(nums){
+                    for(z=0;z<val2.length;z++){
+                        if(isNaN(val2.charAt(z))){
+                            letra = new RegExp(val2.charAt(z),"g")
+                            val2 = val2.replace(letra,"")
+                        }
+                    }
+                }
+                val = ''
+                val3 = new Array()
+                for(s=0; s<pat.length; s++){
+                    val3[s] = val2.substring(0,pat[s])
+                    val2 = val2.substr(pat[s])
+                }
+                for(q=0;q<val3.length; q++){
+                    if(q ==0){
+                        val = val3[q]
+                    }
+                    else{
+                        if(val3[q] != ""){
+                            val += sep + val3[q]
+                        }
+                    }
+                }
+                d.value = val
+                d.valant = val
+            }
+        }
+    </script>
+
+<script>
+    
+    $('#videoTabs a').click(function (e) {
+  e.preventDefault()
+  $(this).tab('show')
+})
+</script>
+
+    {% endblock scripts %}
+
+
+
+
+

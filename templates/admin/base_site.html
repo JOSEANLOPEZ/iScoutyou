@@ -1,0 +1,43 @@
+{% extends "admin/base.html" %}
+{% load i18n %}
+ 
+{% block title %}{{ title }} | {% trans 'iScoutYou Super-Admin' %}{% endblock %}
+ 
+{% block branding %}
+<style type="text/css">
+  #header
+  {
+    /* your style here */
+  }
+</style>
+<h1 id="site-name">{% trans 'iScoutYou Super-Admin' %}</h1>
+{% endblock %}
+
+
+
+
+{% block welcome-msg %}
+                {% trans 'Welcome,' %}
+                <strong>{% firstof user.get_short_name user.get_username %}</strong>.
+            {% endblock %}
+            {% block userlinks %}
+                {% if site_url %}
+                    <a href="/superadmin">{% trans 'View site' %}</a> /
+                {% endif %}
+                {% if user.is_active and user.is_staff %}
+                    {% url 'django-admindocs-docroot' as docsroot %}
+                    {% if docsroot %}
+                        <a href="{{ docsroot }}">{% trans 'Documentation' %}</a> /
+                    {% endif %}
+                {% endif %}
+                {% if user.has_usable_password %}
+                {% comment "optional note" %}
+                <a href="{% url 'admin:password_change' %}">{% trans 'Change password' %}</a> /   
+                {% endcomment %}
+                <a href="/superadmin/auth/user/{{user.id}}/password/">{% trans 'Change password' %}</a> /
+                {% endif %}
+                <a href="{% url 'admin:logout' %}">{% trans 'Log out' %}</a>
+            {% endblock %}
+
+ 
+{% block nav-global %}{% endblock %}

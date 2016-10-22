@@ -1,0 +1,142 @@
+{% extends "adm_base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+
+
+
+<div id="wrapper">
+	{% include "adm_menu.html" %}
+	<!-- Page Content -->
+	<div id="page-wrapper">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-lg-10">
+					<h1 class="page-header">Athlete - <span>{{athlete.first_name}} {{athlete.last_name}}</span>
+					</h1>
+					<!-- /.col-lg-12 -->
+				</div>
+				<!-- /.row -->
+				<!-- Contenido ****************   -->
+				<div class="row">
+					<div class="col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 col-xs-9 col-sm-9 col-md-9 col-lg-9">
+
+
+
+						<div class="panel panel-default">
+							<!-- Default panel contents -->
+							<div class="panel-heading">{{athlete.firstname}} {{athlete.last_name}}</div>
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+										{% if athlete.image_profile %}
+										<img src="{{ athlete.image_profile.url_140x140 }}" alt="..." class="img-thumbnail">
+										{% else %}
+										<img src="{% static "images/iscout-photo.jpg" %}" alt="..." class="img-thumbnail">
+
+										{% endif %}
+
+									</div>
+									<div class="row">
+										<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+											{{athlete.first_name}}
+										</div>
+										<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+											{{athlete.last_name}}
+										</div>
+										<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+											{{athlete.birth}}
+										</div>
+										<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+											{{athlete.state}}
+										</div>
+									</div>
+									
+								</div>
+							</div>
+
+							<!-- Table -->
+							<div class="table-responsive">
+								<table class="table">
+
+
+									<thead>
+										<tr>
+
+											<th>GPA</th>
+											<th>SAT</th>
+											<th>Sport</th>
+											<th>% Profile</th>
+
+
+										</tr>
+									</thead>
+									<tbody>
+
+
+
+										<tr>
+
+											<td>{{athlete.gpa}}</td>
+											<td>{{athlete.sat}}</td>
+											<td>{{athlete.sport}}</td>
+											<td>
+												<div class="progress">
+													<div class="progress-bar" role="progressbar"  aria-valuemin="0" aria-valuemax="100" style="width: {{p}}%;">
+														{{p}}%
+													</div>
+												</div>
+											</td>
+
+										</tr>
+
+
+									</tbody>
+								</table>
+								<br>
+								<div class="col-md-6">
+									<h4 class="text-center">Video 1</h4>
+									{% load embed_video_tags %}
+									<div class="embed-responsive embed-responsive-4by3 videos">
+										{% video video1.video1 'small' %}
+									</div>
+
+								</div>
+								<h4 class="text-center">Video 2</h4>
+								<div class="col-md-6">
+									{% load embed_video_tags %}
+									<div class="embed-responsive embed-responsive-4by3 videos">
+										{% video video2.video2 'small' %}
+
+
+									</div>
+
+								</div>
+								
+							</div>
+							<hr>
+								
+								<div class="pull-right">
+								<a href="{% url 'adm_athlete_view_video' athlete.slug athlete.id %}">
+								<button onclick="location="/admin/sports/add/"" type="button" class="btn btn-primary">Edit Videos</button>
+								</a>
+								</div>
+								<br><br>
+						</div>
+					</div>
+
+
+
+				</div>
+
+
+
+			</div>
+		</div>
+		<!-- /.container-fluid -->
+	</div>
+	<!-- /#page-wrapper -->
+
+</div>
+
+{% endblock%}

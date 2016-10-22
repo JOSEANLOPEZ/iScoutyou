@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+{% block content %}
+
+{% if request.user.is_authenticated %}
+
+{% include "head_myinformation.html" %}
+
+{% if perfil == 'none' %}
+<div class="bs-example">
+    <div class="alert alert-warning fade in">
+        <a href="#" class="close" data-dismiss="alert">×</a>
+        You must create your basic data on <a href="{% url 'editprofile' %}"><strong>Basic Information</strong></a> first     
+    </div>
+</div>
+{% endif %}
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    {% include "submenu_profile.html" %}
+    <div class="bs-example" data-example-id="simple-table">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Stat</th>
+                    <th>Overall</th> 
+       <!--         <th>Unit</th>       -->
+                    <th></th>
+                </tr>
+            </tbody>
+            <tbody> 
+                {% for stats_profile in stats_profile %}
+                <tr>
+                    <!--th scope="row">1</th-->
+                    <td>{{ stats_profile.evaluations.name }}</td> 
+                    <td>{{ stats_profile.result }}</td>
+        <!--        <td>{{ stats_profile.evaluations.measure_name }}</td>   -->
+                    
+                    <td><a href="{% url 'delete_stats' stats_profile.id  %}"><span class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span></a></td>
+                </tr> 
+
+                {% endfor %}
+            </tbody> 
+        </table>
+    </div>
+    <br>
+    <div class="pull-right">
+        {% if perfil == 'none' %}
+        <a href="{% url 'editprofile_stats' %}">
+            <button type="button" class=" btn btn-primary" disabled="disabled">+ Add</button>
+        </a>
+        {% else %}
+        <a href="{% url 'editprofile_stats' %}">
+            <button type="button" class=" btn btn-primary">+ Add</button>
+        </a>
+        {% endif %}
+    </div>
+    <br><br><br><br><br><br>
+</div>
+
+{% endif %}
+{% endblock%}
+
+{% block scripts %}
+<script> $('#save_profile').on('click', function () {
+    var $btn = $(this).button('loading') 
+    $btn.button('reset') }) 
+</script>
+{% endblock %}

@@ -1,0 +1,315 @@
+{% extends "adm_base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+
+
+
+<div id="wrapper">
+	{% include "adm_menu.html" %}
+	<!-- Page Content -->
+	<div id="page-wrapper">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-lg-10">
+					<h1 class="page-header">
+
+						Sports - <a href="{% url 'adm_sport_view'  sport.slug sport.id %}">{{sport.sport_name}}</a>
+
+
+
+						<button onclick=location="{% url 'adm_sport_edit' sport.slug sport.id %}" type="button" class="btn btn-primary btn-circle btn-lg pull-right">
+							<i class="fa fa-edit"></i>
+						</button>
+						<button onclick=location="{% url 'add_sport' %}" type="button" class="btn btn-primary btn-circle btn-lg pull-right">
+							<i class="fa fa-plus"></i>
+						</button>
+					</h1>
+					<!-- /.col-lg-12 -->
+
+				</div>
+				<!-- /.row -->
+				<!-- Contenido ****************   -->
+				<div class="row">
+					<div class="col-xs-offset-1 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 col-xs-9 col-sm-9 col-md-9 col-lg-9">
+						<p>
+							{{sport.descriptions}}
+						</p>
+
+					</div>
+
+				</div>
+				<div class="col-md-10">
+				<form method="post" action="" class="" enctype="multipart/form-data">{% csrf_token %}
+					<div class="ui toggle checkbox ">
+						<h5>Disable </h5>{{ form_act_sport }} <h5> Enable</h5>
+					</div>
+				</form></div>
+
+
+
+				<div class="col-md-offset-0 col-md-10">
+
+					<br>
+
+{% if sport.position_act == True %}
+    
+					<div class="col-md-4">
+
+						<div class="list-group">
+							<li class="list-group-item">
+								<h4>Positions:
+{% comment "optional note" %}
+    									<button onclick=location="{% url 'add_positions' sport.slug sport.id %}" type="button" class="btn btn-primary btn-circle  pull-right">
+										<i class="fa fa-edit"></i>
+									</button>
+{% endcomment %}
+									<button onclick=location="{% url 'add_positions' sport.slug sport.id %}" type="button" class="btn btn-primary btn-circle  pull-right">
+										<i class="fa fa-plus"></i>
+									</button>
+								</h4>
+							</li>
+
+							{% if positions == 'false' %}
+							{% for sport_positions in sport_positions %}
+							<a href="{% url 'adm_sport_view'  sport.slug sport.id sport_positions.id %}" class="list-group-item">{{sport_positions.name_positions}} 
+
+							</a>
+
+							{% endfor %}
+
+							{% else %}
+							{% for sport_positions in sport_positions %}
+							<a href="{% url 'adm_sport_view'  sport.slug sport.id sport_positions.id %}" class="list-group-item 
+							{% if sport_positions.id == position %}
+							active
+							{% endif %}
+
+							">{{sport_positions.name_positions}} 
+
+						</a>
+
+						{% endfor %}
+
+
+						{% endif %}
+
+
+					</div>
+				</div>
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+				<div class="col-md-offset-0 col-md-4">
+					<div class="list-group">
+						<li class="list-group-item">
+							<h4>Measure:
+{% comment "optional note" %}
+    								<button onclick=location="{% url 'add_positions' sport.slug sport.id %}" type="button" class="btn btn-primary btn-circle  pull-right">
+									<i class="fa fa-edit"></i>
+								</button>
+{% endcomment %}
+
+{% if positions != 'false'  %}
+    
+								<button onclick=location="{% url 'add_measure' sport.slug sport.id position %}" type="button" class="btn btn-primary btn-circle  pull-right">
+									<i class="fa fa-plus"></i>
+								</button>
+{% endif %}
+
+{% if sport.position_act == False %}
+<button onclick=location="{% url 'add_measure' sport.slug sport.id position %}" type="button" class="btn btn-primary btn-circle  pull-right">
+	<i class="fa fa-plus"></i>
+</button>
+
+{% endif %}
+
+
+
+
+							</h4>
+						</li>
+						{% if positions == 'false' %}
+
+
+						{% else %}
+						{% for positions in positions %}
+						{% for cat_evaluations in positions.cat_evaluations.all %}
+						<a href="{% url 'adm_sport_view' sport.slug sport.id position cat_evaluations.id %}" class="list-group-item
+						{% if cat_evaluations.id == measure %}
+						active
+						{% endif %}
+						">{{cat_evaluations.name_cat_evaluations}}
+					</a>
+
+					{% endfor %}
+					
+					{% endfor %}
+					{% endif %}
+
+					{% if sport.position_act == False %}
+					  {% for cat_evaluations in cat_evaluations %}
+
+					  <a href="{% url 'adm_sport_view' sport.slug sport.id position cat_evaluations.id %}" class="list-group-item
+					  {% if cat_evaluations.id == measure %}
+					  active
+					  {% endif %}
+					  ">{{cat_evaluations.name_cat_evaluations}}
+					</a>
+
+					  {% endfor %}
+
+					{% endif %}
+				</div>
+			</div>
+
+			<div class="col-md-offset-0 col-md-4">
+				<!-- Measures table-->
+				<div class="list-group">
+					<li class="list-group-item">
+						<div class="panel-body">
+							<div class="table-responsive">
+								<table class="table table-striped">
+									<thead>
+{% if evaluation != 'false' %}
+     <button onclick=location="{% url 'add_stat' sport.slug sport.id position measure %}" type="button" class="btn btn-primary btn-circle  pull-right">
+											<i class="fa fa-plus"></i>
+										</button>
+ 
+ {% endif %} 
+
+ {% if cat_eval == 'true' %}
+
+<button onclick=location="{% url 'add_stat' sport.slug sport.id position measure %}" type="button" class="btn btn-primary btn-circle  pull-right">
+	<i class="fa fa-plus"></i>
+</button>						
+{% endif %}
+
+
+										<tr>
+											<th>Key</th>
+						<!--				<th>Unit</th>		-->
+										</tr>
+									</thead>
+									<tbody>
+
+						{% if positions == 'false' %}
+
+						{% else %}
+							{% for positions_evaluations in positions_evaluations %}
+								{% for cat_evaluations in positions_evaluations.cat_evaluations.all %}
+									{% if cat_evaluations.id == measure %}
+										{% for evaluations in cat_evaluations.evaluations.all %}
+											<tr>
+												<td>{{evaluations.name}}</td>
+							<!--				<td>{{evaluations.measure_name}}</td>		-->
+											</tr>
+										{% endfor %}
+									{% endif %}
+								{% endfor %}
+							{% endfor %}
+						{% endif %}
+
+
+
+										 {% if cat_eval == 'true' %}
+												
+											{% for cat_evaluations_eval in cat_evaluations_eval %}
+												
+
+												{% for evaluations in cat_evaluations_eval.evaluations.all %}
+													<tr>
+														<td>{{evaluations.name}}</td>
+								<!--					<td>{{evaluations.measure_name}}</td>		-->
+													</tr>
+												{% endfor %}
+
+
+
+
+
+											{% endfor %}
+
+										{% endif %}
+
+
+
+									</tbody>
+								</table>
+							</div>
+							<!-- /.table-responsive -->
+						</div>
+						<!-- End Measures table-->
+					</div>
+
+
+
+
+
+
+
+
+
+
+
+				</div>
+
+				<!-- *************************** -->
+
+
+
+
+
+
+
+
+
+
+				<!-- *************************** -->
+
+
+
+
+
+			</div>
+
+
+		</div>
+		<!-- /.container-fluid -->
+	</div>
+	<!-- /#page-wrapper -->
+
+</div>
+
+{% endblock%}
+
+{% block scripts %}
+	<script>
+$(document).ready(function() {
+    $('.ui.checkbox').checkbox({
+    	onChecked: function() {
+    		console.log( "onChecked" );
+    		//$("#loader").addClass("active");
+    		//location.reload();
+    		$('.ui.basic.modal').modal('show');
+			this.form.submit();
+    	},
+    	onUnchecked: function() {
+    		console.log( "onUnchecked" );
+    		//$("#loader").addClass("active");
+    		//location.reload();
+    		$('.ui.basic.modal').modal('show');
+    		this.form.submit();
+    	},
+    });
+});
+	</script>
+{% endblock scripts %}

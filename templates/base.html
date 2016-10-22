@@ -1,0 +1,38 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>{% block title %}I Scout You{% endblock title %}</title>
+
+		{% include "cssyscript.html" %}
+
+		{% block cssyscript %}{% endblock cssyscript %}
+
+		{% block analytics %}{% endblock analytics %}
+	</head>
+	<body>
+
+		{% include "aside_izq.html" %}
+
+		{% include "menu.html" %}			
+
+		{% include "cabecera_content.html" %}
+
+			{% block content %}{% endblock content%}
+
+
+			{% include "pie_content.html" %}
+
+			{% include "footer_dashboard.html" %}
+
+
+
+		{% include "script.html" %}
+
+			{% block scripts %}{% endblock scripts %}
+		
+	</body>
+</html>

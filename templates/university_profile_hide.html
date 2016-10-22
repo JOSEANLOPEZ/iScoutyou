@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% load bootstrap_pagination %}
+
+
+{% block content %}
+
+{% if request.user.is_authenticated %}
+
+
+{% include "head_myinformation.html" %}
+
+
+{% if perfil == 'none' %}
+<div class="bs-example">
+    <div class="alert alert-warning fade in">
+        <a href="#" class="close" data-dismiss="alert">×</a>
+        You must create your basic data on <a href="{% url 'editprofile' %}"><strong>Basic Information</strong></a> first     
+    </div>
+</div>
+{% endif %}
+
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            <a href="{% url 'university_profile_filter' 'name' %} ">Name</a>
+                            <a href="{% url 'university_profile_filter' 'name' %} ">
+                                <i class="glyphicon glyphicon-triangle-bottom"></i>
+                            </a>
+                            <a href="{% url 'university_profile_filter' '-name' %} ">
+                                <i class="glyphicon glyphicon-triangle-top"></i>
+                            </a>
+                        </th>
+                        <th>State</th>
+                        <th>
+                            <a href="{% url 'university_profile_filter' 'division' %} ">Division</a>
+                            <a href="{% url 'university_profile_filter' 'division' %} ">
+                                <i class="glyphicon glyphicon-triangle-bottom"></i>
+                            </a>
+                            <a href="{% url 'university_profile_filter' '-division' %} ">
+                                <i class="glyphicon glyphicon-triangle-top"></i>
+                            </a>
+                        </th>
+                        <th>Tuition In</th>
+                        <th>Tuition Out</th>
+                        <th>GPA</th>
+                        <th>
+                            <a href="{% url 'university_profile_filter' '-sat' %}" >SAT</a>
+                            <a href="{% url 'university_profile_filter' '-sat' %} ">
+                                <i class="glyphicon glyphicon-triangle-bottom"></i>
+                            </a>
+                            <a href="{% url 'university_profile_filter' 'sat' %} ">
+                                <i class="glyphicon glyphicon-triangle-top"></i>
+                            </a>
+                        </th>
+                        <th>Enrollement</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                {% comment "optional note" %}
+                     {% for fil_university in fil_university %}
+                    <tr>
+                        <td>{{fil_university.name}}</td>
+                        <td>{{fil_university.state}}</td>
+                        <td>{{fil_university.division}}</td>
+                        <td>{{fil_university.tuision_in}}</td>
+                        <td>{{fil_university.tuition_out}}</td>
+                        <td>{{fil_university.gpa}}</td>
+                        <td>{{fil_university.sat}}</td>
+                        <td>{{fil_university.enrollement}}</td>
+                    </tr>
+                    {% endfor %}  
+                {% endcomment %}
+                     
+
+                </tbody>
+            </table>
+
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+           {% comment "optional note" %}
+                  {% bootstrap_paginate fil_university range=4 show_first_last="true" show_index_range="true" %}
+           {% endcomment %}
+ 
+
+         
+            </div>
+            </div>
+    </div>
+</div>
+<br><br><br>
+<br>
+<br>
+<br>
+
+{% endif %}
+
+{% endblock%}

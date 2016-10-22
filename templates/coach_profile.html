@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+{% block content %}
+
+{% if request.user.is_authenticated %}
+
+{% include "head_myinformation.html" %}
+
+{% if perfil == 'none' %}
+<div class="bs-example">
+    <div class="alert alert-warning fade in">
+        <a href="#" class="close" data-dismiss="alert">×</a>
+        You must create your basic data on <a href="{% url 'editprofile' %}"><strong>Basic Information</strong></a> first     
+    </div>
+</div>
+{% endif %}
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    {% include "submenu_profile.html" %}
+
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading"><h4>COACH(ES) INFO</h4></div>
+        <table class="table table-hover">
+            <tbody>
+                <tr>
+                    <th>Name</th>
+                    <th>Position</th> 
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </tbody>
+            <tbody> 
+                {% for coach_profile in coach_profile %}
+                <tr>
+                    <!--th scope="row">1</th-->
+                    <td>{{ coach_profile.coach_name }}</td> 
+                    <td>{{ coach_profile.position }}</td>
+                    <td>{{ coach_profile.phone }}</td> 
+                    <td>{{ coach_profile.email }}</td>
+                    <td><a href="{% url 'delete_coach' coach_profile.id  %}"><span class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span></a></td>
+                    <td><a href="{% url 'alter_editprofile_coach' coach_profile.id  %}"><span class="glyphicon glyphicon-pencil text-danger" aria-hidden="true"></span></a></td>
+                </tr> 
+
+                {% endfor %}
+            </tbody> 
+        </table>
+        <div class="panel-footer">
+            <div class="pull-right">
+                {% if perfil == 'none' %}
+                <a href="{% url 'editprofile_coach' %}">
+                    <button type="button" class=" btn btn-primary" disabled="disabled">+ Add</button>
+                </a>
+                {% else %}
+                <a href="{% url 'editprofile_coach' %}">
+                    <button type="button" class=" btn btn-primary">+ Add</button>
+                </a>
+                {% endif %}
+             
+            </div>
+            <br><br>
+        </div>
+    </div>
+
+    <br>
+    
+    <br><br><br><br><br><br>
+</div>
+
+{% endif %}
+{% endblock%}
+
+{% block scripts %}
+<script> $('#save_profile').on('click', function () {
+    var $btn = $(this).button('loading') 
+    $btn.button('reset') }) 
+</script>
+{% endblock %}

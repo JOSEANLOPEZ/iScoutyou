@@ -1,0 +1,64 @@
+{% load bootstrap3 %}
+
+
+<!-- Sub-menu athlete information -->
+<aside>
+    <ul class="nav nav-tabs">
+        <li role="presentation" {% if submenu == 'editprofile'%} class="active"{% endif %}>
+            <a href="{% url 'editprofile'  %}">Basic Information</a>
+        </li>
+        <li role="presentation" {% if submenu == 'academicinfo'%} class="active"{% endif %}>
+            <a href="{% url 'profile_academic' %}">Academic Information</a>
+        </li>
+
+{% comment "optional note" %}
+        <li role="presentation" {% if submenu == 'coach'%} class="active"{% endif %}>
+            <a href="{% url 'profile_coach' %}">Coach Reference</a>
+        </li>
+
+            <li role="presentation" {% if submenu == 'stats'%} class="active"{% endif %}>
+            <a href="{% url 'profile_stats' %}">Athletic Information</a>
+        </li>
+{% endcomment %}
+
+        <li role="presentation" {% if submenu == 'stats2'%} class="active"{% endif %}>
+            <a href="{% url 'profile_stats2' %}">Athletic Information</a>
+        </li>
+    </ul>
+</aside>
+<br>
+
+
+
+<!--<aside>
+    <nav class="bs-docs-sidebar hidden-print hidden-xs  affix-top">
+        <ul class="nav bs-docs-sidenav">
+            <li> 
+                <a href="{% url 'editprofile'  %}">Basic Information</a>
+            </li>
+            <li>
+
+                <a href="{% url 'profile_academic' %}">Academic Information</a>
+            </li>
+        </ul>
+    </nav> 
+</aside>
+<div class="visible-xs">
+    <nav class=" navbar-default" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="collapse collapse-side navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="{% url 'editprofile'  %}">Basic Information</a></li>
+                <li><a href="{% url 'profile_academic' %}">Academic Information</a></li>  
+            </ul>
+            <br>
+        </div>
+    </nav>
+</div>-->
+<!-- Fin Sub-menu athlete information -->

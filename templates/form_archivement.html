@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+{% block content %}
+		
+	{% if request.user.is_authenticated %}
+		
+<!--<h3>Academy Info</h3><br>-->
+		{% bootstrap_messages %}
+
+
+<div class="row">
+	<form method="post" action="" class="" enctype="multipart/form-data">{% csrf_token %}
+		<fieldset>
+			{% include "head_myinformation.html" %}
+			<div class=" col-xs-12 col-sm-10 col-md-12 col-lg-12" >  
+			{% include "submenu_profile.html" %} 
+				<div class="panel panel-primary">
+					<div class="panel-heading">Add information:</div>
+					<div class="panel-body">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<div class="form-group"> 
+								<div class="col-md-2">{% bootstrap_field form.year%}</div>
+								{% comment %}
+									<div class="col-md-10">{% bootstrap_field form.archivement%}</div>
+								{% endcomment %}
+								<div class="col-md-12">{% bootstrap_field form.descriptions%}</div>
+
+
+							</div>
+
+
+						</div>
+                    </div>
+                </div>
+                {% buttons %}
+				    <button type="submit" data-loading-text="saving..." id="save_profile" class="btn btn-primary btn-lg btn-block">Save</button>
+				{% endbuttons %}
+			</div>
+		</fieldset>
+    </form>
+ <hr>
+
+
+    </div>
+
+
+
+
+	{% endif %}
+{% endblock%}
+
+{% block scripts %}
+
+
+    <script> $('#save_profile').on('click', function () {
+     var $btn = $(this).button('loading') 
+        $btn.button('reset') }) 
+    </script>
+{% endblock %}

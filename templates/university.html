@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% load humanize %}
+{% block content %}
+
+{% if request.user.is_authenticated %}
+
+{% include "head_myinformation.html" %}
+
+{% if perfil == 'none' %}
+<div class="bs-example">
+    <div class="alert alert-warning fade in">
+        <a href="#" class="close" data-dismiss="alert">×</a>
+        You must create your basic data on <a href="{% url 'editprofile' %}"><strong>Basic Information</strong></a> first     
+    </div>
+</div>
+{% endif %}
+
+<div class=" col-xs-12 col-sm-offset-1 col-sm-11 col-md-offset-0 col-lg-offset-0 col-md-12 col-lg-12">
+
+
+
+    <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading"><h4>{{university.name}} - {{university.state}}</h4></div>
+      <div class="panel-body">
+      <div class="col-md-5">
+      <br>
+            <p>{{university.address}}</p>
+            <p><a href="{{university.web_page}}" target="_blank">{{university.web_page}}</a></p>  
+        </div>
+        <div class="col-md-7">
+            <table class="table">
+        <thead>
+            <tr>
+                    <th>Coach Name</th> 
+                    <th>Email</th> 
+                    <th>Assistant</th> 
+                    <th>Email</th>
+                <tbody>
+                    <tr>
+                        <td>{{coach.name_coach}}</td>
+                        <td>{{coach.email_coach}}</td>
+                        <td>{{coach.name_assistant}}</td>
+                        <td>{{coach.email_assistant}}</td>            
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+<br>
+    <!-- Table -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Division</th>
+                <th>Tuition In</th>
+                <th>Tuition Out</th>
+                <th>GPA</th>
+                <th>SAT</th>
+                <th>ACT</th>
+                <th>Enrollement</th>
+                <tbody>
+                    <tr>
+                        <td>{{university.name}}</td>
+                        <td>{{university.division}}</td>
+                        <td>{{university.tuision_in|intcomma}}</td>
+                        <td>{{university.tuition_out|intcomma}}</td>
+                        <td>{{university.gpa}}</td>
+                        <td>{{university.sat}}</td>
+                        <td>{{university.act}}</td>
+                        <td>{{university.enrollement}}</td>                
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+
+
+
+
+
+        <br><br><br><br><br><br>
+    </div>
+
+    {% endif %}
+    {% endblock%}
+
+    {% block scripts %}
+    <script> $('#save_profile').on('click', function () {
+        var $btn = $(this).button('loading') 
+        $btn.button('reset') }) 
+    </script>
+    {% endblock %}

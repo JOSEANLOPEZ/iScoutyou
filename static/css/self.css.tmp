@@ -1,0 +1,175 @@
+/* temporales */
+.rojo{
+	background-color: red;
+}
+.azul{
+	background-color: blue;
+}
+.amarillo{
+	background-color: yellow;
+}
+.gris{
+	background-color: grey;
+}
+hr {
+    border-top: 1px solid rgba(34, 36, 38, 0.15);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.letraB{
+	color: white;
+}
+
+/* temporales */
+
+.self-navbar{
+	background: rgba(0, 0, 0, 0.75);
+	position: fixed;
+	height:  100%;
+	margin:0px;
+	padding: 0px;
+	width: 64px;
+	z-index: 1031;
+}
+
+.self-logo-bar{
+	padding-top: 13px;
+	padding-bottom: 9px;
+
+	background-color: black;
+	width: 63px;
+
+}
+.fa{
+	/*color:#85817F;*/
+	color: #fff;
+    display: block;
+    padding: 0.4rem 0;
+    opacity: 0.5;
+	font-size: 1.1em;
+}
+.fa:hover{
+	color:white;
+	opacity: 1;
+}
+
+.self-social-icon{
+	display: block;
+    text-align: center;
+	padding-top:21px;
+	padding-bottom: 14px;
+	font-size: 1.1em;
+}
+
+
+/* nav-bar */
+      
+      @media screen and (max-width: 768px) {
+          .side-collapse-container{
+              width:100%;
+              position:relative;
+              left:0;
+              transition:left .4s;
+          }
+          .side-collapse-container.out{
+              left:200px;
+          }
+          .side-collapse {
+              top:0px;
+              bottom:0;
+              left:0;
+              width:270px;
+              position:fixed;
+              overflow:hidden;
+              transition:width .4s;
+          
+              padding-right: 0px;
+              font-size: 1.2em;
+
+          }
+          .side-collapse .nav li a {
+          	display: block;
+			padding-left:50px;
+          }
+          .side-collapse .nav li img {
+          		display: block;
+          }
+
+          .side-collapse .navbar-right{
+			margin-right: 0px;
+			padding-right: 0px;
+          }
+          .side-collapse.in {
+              width:0;
+          }
+      }
+      
+.self-menu-bar .navbar-nav li a:hover {
+      border-bottom-style: solid;
+          padding-bottom: 5px;
+}
+.navbar{
+	height: 70px;
+	background-color: #404040;
+
+}
+
+.navbar-right{
+	margin-right: 25px;
+}
+
+.centrar-boton{
+ position: absolute;
+  top: 30%; 
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.self-row-menu{
+	height: 70px;
+
+}
+
+.self-menu-bar .navbar-inverse{
+		background-color: #404040;
+}
+.self-menu-bar .navbar-nav{
+		margin-top: 10px;
+}
+.logo-sm{
+	width:  222px;
+	height:  auto;
+	margin: 18px auto;
+}
+
+/* nav-bar */
+
+/* CONTAINER GENERAL */
+
+.general{
+ padding-top: 80px;
+ 
+}
+
+/* CONTAINER GENERAL */
+
+/* PADDING GENERAL */
+.margen {
+     padding-top: 15px;
+     padding-bottom: 15px;
+}
+/* PADDING GENERAL */
+
+
+.bannerlogin {
+
+        /*padding: 3.25rem;*/
+        background: #888 url('../images/banner/BGTOP.jpg');
+        /*text-align: center !important;
+        background-size: cover;*/
+}
+
+.cabecera-login{ 
+  padding-right: 0px; 
+  padding-left: 0px; 
+}

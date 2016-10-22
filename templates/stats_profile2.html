@@ -1,0 +1,507 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+{% block content %}
+
+{% if request.user.is_authenticated %}
+
+{% include "head_myinformation.html" %}
+
+{% if perfil == 'none' %}
+<div class="bs-example">
+    <div class="alert alert-warning fade in">
+        <a href="#" class="close" data-dismiss="alert">×</a>
+        You must create your basic data on <a href="{% url 'editprofile' %}"><strong>Basic Information</strong></a> first
+    </div>
+</div>
+{% endif %}
+
+<div class="col-xs-12 col-sm-offset-1 col-sm-11 col-md-offset-0 col-md-12 col-lg-offset-0 col-lg-12">
+    {% include "submenu_profile.html" %}
+
+{% if sport == 'none' %}
+
+<div class="panel panel-default">
+<div class="panel-heading"><h4>Sport Information:</h4></div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                <form method="post" action="" class="" enctype="multipart/form-data">{% csrf_token %}
+
+                    {% bootstrap_form form %}
+
+                    {% buttons %}
+
+                        <a href="{% url 'profile_stats2' %}" class="btn btn-default" role="button">Close</a>
+
+                        <button type="submit" class="btn btn-primary ">Save</button>
+
+                    {% endbuttons %}
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% elif sport = 'true' %}
+
+<div class="panel panel-default">
+<div class="panel-heading"><h4>Position Information:</h4></div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-offset-1 col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                <br>
+            <h4>Sport: {{profile.sport}}</h4>
+
+
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                <form method="post" action="" class="" enctype="multipart/form-data">{% csrf_token %}
+
+                    {% bootstrap_form form %}
+
+                    {% buttons %}
+
+                    <a href="{% url 'profile_stats2' %}" class="btn btn-default" role="button">Close</a>
+
+                    <button type="submit" class="btn btn-primary ">Save</button>
+
+                    {% endbuttons %}
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+{% else %}
+
+
+
+{% if salvar == 'true' %}
+<div class="alert alert-success alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>Well done!</strong> Saving completed successfully, you can see your <a href="{% url 'dashboard' %}">Preview Profile</a>
+</div>
+{% elif error == 'true' %}
+<div class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>Something is wrong!,</strong> Some fiels are missing data or invalid
+</div>
+
+
+{% endif %}
+
+{% bootstrap_messages %}
+
+
+<br>
+{% comment "optional note" %}
+    
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading"><h4>ATHLETIC STATS</h4></div>
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Key</th>
+                    <th>Overall</th>
+        <!--        <th>Unit</th>       -->
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for evaluations in evaluations %}
+
+                <tr>
+                    <td><a href="{% url 'editprofile_stats2' evaluations.id %}"><span class="glyphicon glyphicon-plus " aria-hidden="true"></span></a></td>
+                    <td>{{ evaluations.name }}</td>
+                    {% for stats in stats %}
+                        {% if stats.evaluations.id == evaluations.id %}
+                        <td>{{ stats.result }}</td>
+       <!--             <td>{{ evaluations.measure_name }}</td>     -->
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endcomment %}
+
+<br>
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading"><h4>ATHLETIC STATS</h4></div>
+        <table class="table table-hover table-bordered">
+
+            <tbody>
+
+            {% for cat_position_eval in cat_position_eval %}
+                    {% for eval in cat_position_eval.cat_evaluations.all %}
+                      <tr><td colspan="4" class="active"> <h4 class="text-center">{{eval.name_cat_evaluations}}</h4></td></tr> 
+                <tr>
+                    <th></th>
+                    <th>Stat</th>
+                    <th>Overall</th>
+         <!--       <th>Unit</th>     -->
+                </tr>
+                        {% for stat in eval.evaluations.all %}
+                <tr>
+                    <td><a href="{% url 'editprofile_stats2' stat.id %}"><span class="glyphicon glyphicon-plus " aria-hidden="true"></span></a></td>
+                    <td> {{stat.name}}</td>
+                    {% for stats in stats %}
+                        {% if stats.evaluations.id == stat.id %}
+                        <td>{{ stats.result }}</td>
+        <!--            <td>{{ stat.measure_name }}</td>    -->
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+                        {% endfor %}
+                    {% endfor %}
+                {% endfor %}
+                
+                {% if cat_position_eval == 'false' and position == 'non_apply' %}
+
+                    {% for cat_eval in cat_eval %}
+                        
+
+
+
+
+<tr><td colspan="4" class="active"> <h4 class="text-center">{{cat_eval.name_cat_evaluations}}</h4></td></tr> 
+                <tr>
+                    <th></th>
+                    <th>Key</th>
+                    <th>Overall</th>
+       <!--         <th>Unit</th>       -->
+                </tr>
+                        {% for stat in cat_eval.evaluations.all %}
+                <tr>
+                    <td><a href="{% url 'editprofile_stats2' stat.id %}"><span class="glyphicon glyphicon-plus " aria-hidden="true"></span></a></td>
+                    <td> {{stat.name}}</td>
+                    {% for stats in stats %}
+                        {% if stats.evaluations.id == stat.id %}
+                        <td>{{ stats.result }}</td>
+      <!--              <td>{{ stat.measure_name }}</td>        -->
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+                        {% endfor %}
+ 
+
+
+
+                    {% endfor %}
+                
+                {% endif %}
+
+
+
+
+
+            </tbody>
+        </table>
+    </div>
+<br>
+           
+
+
+    <br>
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading"><h4>ATHLETIC HISTORY</h4></div>
+        <table class="table table-hover table-bordered">
+            <tbody>
+                <tr>
+
+                    <th>Year</th>
+                    <th>High School </th>
+                    <!--th>Achievement</th-->
+                    <th>Descriptions</th>
+
+                </tr>
+            </tbody>
+            <tbody>
+                {% for history_profile in history_profile %}
+                <tr>
+                    <!--th scope="row">1</th-->
+
+                    <td>{{ history_profile.year }}</td>
+                    <td>{{ history_profile.highschool }}</td>
+                    <td>{{ history_profile.descriptions }}</td>
+                    <!--td>{{ acad_profile.logros }}</td-->
+                    <td><a href="{% url 'delete_athlete_history' history_profile.id  %}"><span class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span></a></td>
+                    <td><a href="{% url 'alter_editprofile_history' history_profile.id  %}"><span class="glyphicon glyphicon-pencil text-danger" aria-hidden="true"></span></a></td>
+                </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+        <div class="panel-footer">
+            <div class="pull-right">
+                {% if perfil == 'none' %}
+                <a href="{% url 'athlete_history' %}">
+                    <button type="button" class=" btn btn-primary" disabled="disabled">+ Add</button>
+                </a>
+                {% else %}
+                <a href="{% url 'athlete_history' %}">
+                    <button type="button" class=" btn btn-primary">+ Add</button>
+                </a>
+                {% endif %}
+            </div>
+            <br><br>
+
+        </div>
+    </div>
+
+<br>
+
+
+
+<div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading"><h4>VARSITY TEAM</h4></div>
+    <form method="post" action="" class="" enctype="multipart/form-data">{% csrf_token %}
+    <br>
+        <div class="row">
+            <div class="col-md-offset-0 col-md-11">
+                <br>
+{% if perfil == 'true' %}
+<div class="col-md-1">
+
+    {% bootstrap_field form.varsity_yn %}
+</div>
+<div class="col-md-offset-1 col-md-8">
+    {% bootstrap_field form.varsity_club %}
+</div>
+<div class="col-md-2">
+    {% bootstrap_field form.varsity_years %}
+</div>
+{% endif %}
+
+
+
+
+            </div>
+            <br>
+        </div>
+<br><br>
+<div class="panel-footer">
+  <div class="pull-right">
+    {% if perfil == 'none' %}
+    {% buttons %}
+
+    <button type="submit" class="btn btn-primary" disabled="disabled">Save</button>
+    {% endbuttons %}
+
+    {% else %}
+    {% buttons %}
+
+    <button type="submit" class="btn btn-primary" >Save</button>
+
+    {% endbuttons %}
+    {% endif %}
+  </div>
+
+  <br><br>
+
+</div>
+
+    </form>
+
+</div>
+
+<br>
+
+
+ <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading"><h4>CLUB SEASON HISTORY</h4></div>
+        <table class="table table-hover table-bordered">
+            <tbody>
+                <tr>
+
+                    <th>Year</th>
+                    <th>Club</th>
+                    <!--th>Achievement</th-->
+                    <th>Descriptions</th>
+
+                </tr>
+            </tbody>
+            <tbody>
+                {% for club_season_history in club_season_history %}
+                <tr>
+                    <!--th scope="row">1</th-->
+
+                    <td>{{ club_season_history.year }}</td>
+                    <td>{{ club_season_history.club }}</td>
+                    <td>{{ club_season_history.descriptions }}</td>
+                    <!--td>{{ acad_profile.logros }}</td-->
+                    <td><a href="{% url 'delete_club_season_history' club_season_history.id  %}"><span class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span></a></td>
+                    <td><a href="{% url 'alter_editclub_season_history' club_season_history.id  %}"><span class="glyphicon glyphicon-pencil text-danger" aria-hidden="true"></span></a></td>
+                </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+
+
+        <div class="panel-footer">
+            <div class="pull-right">
+                {% if perfil == 'none' %}
+                <a href="{% url 'club_season_history' %}">
+                    <button type="button" class=" btn btn-primary" disabled="disabled">+ Add</button>
+                </a>
+                {% else %}
+                <a href="{% url 'club_season_history' %}">
+                    <button type="button" class=" btn btn-primary">+ Add</button>
+                </a>
+                {% endif %}
+            </div>
+            <br><br>
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading"><h4>COACH(ES) INFO</h4></div>
+        <table class="table table-hover table-bordered">
+            <tbody>
+                <tr>
+
+                    <th>Name</th>
+                    <th>Position</th>
+                    <th>Mobile</th>
+                    <th>Email</th>
+
+                </tr>
+            </tbody>
+            <tbody>
+                    {% for coach_profile in coach_profile %}
+                <tr>
+                    <!--th scope="row">1</th-->
+                    <td>{{ coach_profile.coach_name }}</td>
+                    <td>{{ coach_profile.position }}</td>
+                    <td>{{ coach_profile.phone }}</td>
+                    <td>{{ coach_profile.email }}</td>
+                    <td><a href="{% url 'delete_coach' coach_profile.id  %}"><span class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span></a></td>
+                    <td><a href="{% url 'alter_editprofile_coach' coach_profile.id  %}"><span class="glyphicon glyphicon-pencil text-danger" aria-hidden="true"></span></a></td>
+                </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="panel-footer">
+            <div class="pull-right">
+                {% if perfil == 'none' %}
+                <a href="{% url 'editprofile_coach' %}">
+                    <button type="button" class=" btn btn-primary" disabled="disabled">+ Add</button>
+                </a>
+                {% else %}
+                <a href="{% url 'editprofile_coach' %}">
+                    <button type="button" class=" btn btn-primary">+ Add</button>
+                </a>
+                {% endif %}
+
+            </div>
+            <br><br>
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endif %}
+
+
+
+
+
+
+
+
+
+    <br><br><br><br><br><br>
+</div>
+
+
+
+
+
+
+
+
+{% endif %}
+{% endblock%}
+
+{% block scripts %}
+<script src="{% static "js/jquery.mask.js" %}" type="text/javascript"></script>
+
+<script> $('#save_profile').on('click', function () {
+    var $btn = $(this).button('loading')
+    $btn.button('reset') })
+</script>
+
+
+<script>
+    $(document).ready()
+          $('.phone_with_ddd').mask('(000) 000-0000');
+          
+</script>
+
+{% endblock %}

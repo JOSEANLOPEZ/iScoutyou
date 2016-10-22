@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">
+        <br>
+            <h2 class="text-center">Account</h2>
+<br>
+            {% if request.user.is_authenticated %}
+            <div class="panel panel-default box-shadow--2dp">
+                <div class="panel-heading"><h3>User: {{ request.user.get_username }} </h3></div>
+                <div class="panel-body">
+                    <a href="{% url 'django.contrib.auth.views.password_change' %}">Password change</a> <br><br>
+
+                    {% else %}
+                    <h2 class="text-center"> Welcome. Please <a href="{% url 'auth_login' %}">Login</a></h2>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+{% endblock content %}

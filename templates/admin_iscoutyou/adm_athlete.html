@@ -1,0 +1,98 @@
+{% extends "adm_base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+
+
+<div id="wrapper">
+    {% include "adm_menu.html" %}
+    <!-- Page Content -->
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-11">
+                    <h1 class="page-header">Athletes
+                    </h1>
+                    <!-- /.col-lg-12 -->
+                </div>
+            </div>
+            <!-- /.row -->
+            <!-- Contenido ****************   -->
+            <div class="row">
+                <div class="col-md-offset-0 col-md-12">
+                    <div class="col-md-offset-0 col-md-11">
+                        <!-- Measures table-->
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                            <th>State</th>
+                                            <th>GPA</th>
+                                            <th>SAT</th>
+                                            <th>Sport</th>
+                                            <th colspan="3">% Profile</th>
+
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for athlete in athlete %}
+
+                                        <tr>
+                                            <td>
+                                               <a href="{% url 'adm_athlete_view' athlete.slug athlete.id %}">{{athlete.first_name}}</a>
+                                           </td>
+                                           <td>{{athlete.last_name}}</td>
+                                           <td>{{athlete.state}}</td>
+                                           <td>{{athlete.gpa}}</td>
+                                           <td>{{athlete.sat}}</td>
+                                           <td>{{athlete.sport}}</td>
+                                           <td colspan="3">
+                                            <div class="progress">
+                                                {% for key, value  in dic.items %}
+                                                {% if key == athlete.id %}
+                                                <div class="progress-bar" role="progressbar" aria-valuenow="{{value}}" aria-valuemin="0" aria-valuemax="100" style="width: {{value}}%;">
+                                                    {{value}}%
+                                                </div>
+
+                                                {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                        </td>
+                                        
+                                    </tr>
+                                    {% endfor %}    
+                                </tbody>
+                            </table>
+                            {% comment "Diccionario" %}
+
+                            {% for key, value  in dic.items %}
+                            {% if key == athlete.id %}
+                            {{key}} {{value}}
+
+                            {% endif %}
+                            {% endfor %}
+                            {% endcomment %}    
+                                            </div>
+                        <!-- /.table-responsive -->
+
+                    </div>
+                    <!-- End Measures table-->
+
+                </div>
+
+            </div>
+
+
+            <!-- Fin Contenido ******************   -->
+        </div>
+        <!-- /.container-fluid -->
+    </div>
+    <!-- /#page-wrapper -->
+
+</div>
+
+{% endblock%}

@@ -1,0 +1,17 @@
+{% load staticfiles %}
+
+<script src="{% static "js/jquery-1.12.0.min.js" %}"></script>
+
+<script src="{% static "js/bootstrap.min.js" %}"></script>
+<script>$(document).ready(function() {   
+        var sideslider = $('[data-toggle=collapse-side]');
+        var sel = sideslider.attr('data-target');
+        var sel2 = sideslider.attr('data-target-2');
+        sideslider.click(function(event){
+            $(sel).toggleClass('in');
+            $(sel2).toggleClass('out');
+        });
+    });</script>
+
+ 
+

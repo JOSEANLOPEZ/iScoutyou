@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+{% block content %}
+
+{% if request.user.is_authenticated %}
+
+{% include "head_myinformation.html" %}
+
+{% if perfil == 'none' %}
+<div class="bs-example">
+    <div class="alert alert-warning fade in">
+        <a href="#" class="close" data-dismiss="alert">×</a>
+        You must create your basic data on <a href="{% url 'editprofile' %}"><strong>Basic Information</strong></a> first     
+    </div>
+</div>
+{% endif %}
+
+<div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
+    {% include "submenu_profile.html" %}
+
+    <br>
+
+
+    <br><br><br><br><br><br><br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+</div>
+
+{% endif %}
+{% endblock%}
+
+{% block scripts %}
+<script> $('#save_profile').on('click', function () {
+    var $btn = $(this).button('loading') 
+    $btn.button('reset') }) 
+</script>
+{% endblock %}

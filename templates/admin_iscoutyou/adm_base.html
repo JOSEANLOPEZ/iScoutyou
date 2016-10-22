@@ -1,0 +1,29 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <title>{% block title %}Admin - I Scout You{% endblock title %}</title>
+
+	{% include "adm_cssyscript.html" %}
+
+	{% block cssyscript %}{% endblock cssyscript %}
+
+	{% block analytics %}{% endblock analytics %}
+
+</head>
+<body>
+	{% block content %}{% endblock content%}
+
+
+
+
+
+	{% include "adm_script.html" %}
+	{% block scripts %}{% endblock scripts %}
+</body>
+</html>

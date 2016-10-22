@@ -1,0 +1,143 @@
+{% extends "adm_base.html" %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+{% block content %}
+
+<div id="wrapper">
+    {% include "adm_menu.html" %}
+    <!-- Page Content -->
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-10">
+                    <h1 class="page-header">University</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <!-- Contenido ****************   -->
+            {% bootstrap_messages %}
+            {% if salvar == 'true' %}
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Well done!</strong> Saving completed successfully,  <a href="{% url 'adm_university' %}">University List</a>
+            </div>  
+            {% elif error == 'true' %}
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Something is wrong!,</strong> Some fiels are missing data or invalid 
+            </div>  
+            {% endif %}
+
+
+
+            <div class="row">
+                <form method="post" action="" class="" enctype="multipart/form-data">{% csrf_token %}
+                    <fieldset>
+
+                        <div class=" col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-0 col-xs-12 col-sm-12  col-md-10  col-lg-10" >  
+
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    Add University:
+                                </div>
+                                <div class="panel-body">	
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="form-group"> 
+                                            <div class="col-sm-12 col-md-12">
+                                                {% bootstrap_field form.name%}
+                                            </div>
+                                            <div class="col-sm-12 col-md-12">
+                                                    {% bootstrap_field form.address%}
+                                            </div>
+                                            <div class="col-sm-4 col-md-4">
+                                                        {% bootstrap_field form.country%}
+                                             </div>
+                                                <div class="form-group">
+                                                    <div class="col-sm-4 col-md-4">
+                                                        {% bootstrap_field form.state%}
+                                                    </div>
+                                                    <div class="col-sm-4 col-md-4">
+                                                        {% bootstrap_field form.division%}
+                                                    </div>
+                                                    
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-sm-12 col-md-12">
+                                                    {% bootstrap_field form.web_page%}
+                                                </div>
+                                                
+                                            </div>
+                                            <!-- CODIGO PARA AGREGAR LA IMAGEN/LOGO DE LA UNIVERSIDAD  -->
+                                            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                                {% if form.instance.image_university %}
+                                                <img src="{{ form.instance.image_profile.url_190x240 }}" alt="..." class="img-thumbnail imgprofile center-block">
+                                                {% else %}
+                                                <img src="{% static "images/iscout-photo.jpg" %}" alt="..." class="img-thumbnail imgprofile center-block">
+                                                {% endif %}
+
+                                                <input id="uploadFile" placeholder="Choose File" disabled="disabled" class="inputfile center-block" />
+                                                <div class="fileUpload btn btn-primary btn-block center-block">
+                                                    <span>Upload Image</span>
+                                                    {% bootstrap_field form.image_university %}
+                                                </div>
+                                                </br>
+                                            </div>
+                        <!--   FIN      -->
+                                            <div class="form-group">
+                                                <div class="col-sm-2 col-md-2">
+                                                    {% bootstrap_field form.tuision_in%}
+                                                </div>
+                                                <div class="col-sm-2 col-md-2">
+                                                    {% bootstrap_field form.tuition_out%}
+                                                </div>
+                                                <div class="col-sm-2 col-md-2">
+                                                    {% bootstrap_field form.gpa%}
+                                                </div>
+                                                <div class="col-sm-2 col-md-2">
+                                                    {% bootstrap_field form.sat%}
+                                                </div>
+                                                <div class="col-sm-2 col-md-2">
+                                                    {% bootstrap_field form.act%}
+                                                </div>
+                                                <div class="col-sm-2 col-md-2">
+                                                    {% bootstrap_field form.enrollement%}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-offset-1 col-md-10">
+                                           
+                                                <h3 class="text-center">Sport</h3><hr>
+                                                {% bootstrap_field form.sport%}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-footer">
+                                    {% buttons %} 
+                                    <button type="submit"class="btn btn-primary pull-right">
+                                        Save
+                                    </button>
+
+                    <button  onclick=location="../" class="btn pull-right">
+                                        Cancel
+                                    </button>
+      
+                                    <br>
+                                    {% endbuttons %}
+                                </div> 
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+                <hr>
+            </div>
+            <!-- Fin Contenido ******************   -->
+        </div>
+        <!-- /.container-fluid -->
+    </div>
+    <!-- /#page-wrapper -->
+</div>
+{% endblock%}

@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% load bootstrap_pagination %}
+{% load humanize %}
+
+{% block content %}
+
+{% if request.user.is_authenticated %}
+{% if perfil == 'none' %}
+<div class="bs-example">
+    <div class="alert alert-warning fade in">
+        <a href="#" class="close" data-dismiss="alert">×</a>
+        You must create your basic data first     
+    </div>
+</div>
+
+{% endif %}
+
+{% include "head_myinformation.html" %}
+
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="table-responsive">
+            <table class="table table-striped ">
+                <thead>
+                    <tr>
+                        <th colspan="9" class="text-center"><h4>iScoutYou Find Colleges Result: {{cant_univ}} Universities</h4></th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <a href="{% url 'university_profile_filter' 'name' %} ">Name</a>
+                            <a href="{% url 'university_profile_filter' 'name' %} ">
+                                <i class="glyphicon glyphicon-triangle-bottom"></i>
+                            </a>
+                            <a href="{% url 'university_profile_filter' '-name' %} ">
+                                <i class="glyphicon glyphicon-triangle-top"></i>
+                            </a>
+                        </th>
+                        <th>State</th>
+                        <th>
+                            <a href="{% url 'university_profile_filter' 'division' %} ">Division</a>
+                            <a href="{% url 'university_profile_filter' 'division' %} ">
+                                <i class="glyphicon glyphicon-triangle-bottom"></i>
+                            </a>
+                            <a href="{% url 'university_profile_filter' '-division' %} ">
+                                <i class="glyphicon glyphicon-triangle-top"></i>
+                            </a>
+                        </th>
+                        <th>Tuition In</th>
+                        <th>Tuition Out</th>
+                        <th>
+                            
+                            <a href="{% url 'university_profile_filter' '-gpa' %}" >GPA</a>
+                            <a href="{% url 'university_profile_filter' '-gpa' %} ">
+                                <i class="glyphicon glyphicon-triangle-bottom"></i>
+                            </a>
+                            <a href="{% url 'university_profile_filter' 'gpa' %} ">
+                                <i class="glyphicon glyphicon-triangle-top"></i>
+                            </a>
+                        </th>
+                        <th>SAT</th>
+                         <th>ACT</th>
+                        <th>Enrollement</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for fil_university in fil_university %}
+                    <tr>
+                        <td><a href="{% url 'university'  fil_university.id %}"  >{{fil_university.name}}</a></td>
+                        <td>{{fil_university.state}}</td>
+                        <td class="text-center">{{fil_university.division}}</td>
+                        <td class="text-right">{{fil_university.tuision_in|intcomma}}  </td>
+                        <td class="text-right">{{fil_university.tuition_out|intcomma}}  </td>
+                        <td class="text-right">{{fil_university.gpa}}</td>
+                        <td class="text-center">{{fil_university.sat}}</td>
+                        <td>{{fil_university.act}}</td>
+                        <td class="text-center">{{fil_university.enrollement}}</td>
+                    </tr>
+                    {% endfor %}    
+
+                </tbody>
+            </table>
+
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+           {% comment "optional note" %}
+               
+           {% endcomment %}
+    {% bootstrap_paginate fil_university range=4 show_first_last="true" show_index_range="true" %}
+
+         
+            </div>
+            </div>
+    </div>
+</div>
+<br><br><br>
+<br>
+<br>
+<br>
+
+{% endif %}
+
+{% endblock%}
